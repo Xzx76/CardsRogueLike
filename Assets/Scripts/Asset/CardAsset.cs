@@ -47,7 +47,7 @@ namespace Asset
         [MinValue(0), MaxValue(5), Tooltip("消耗")]
         public int expend;
 
-        [BoxGroup("数据")] public string title;
+        [BoxGroup("数据")] public string cardName;
 
         [BoxGroup("数据")] [ResizableTextArea] public string express;
         [BoxGroup("数据")] [ResizableTextArea] public string desc;
