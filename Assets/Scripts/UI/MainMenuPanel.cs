@@ -28,7 +28,12 @@ namespace TocClient
         }
         public override void OnResume()
         {
+            this.gameObject.SetActive(true);
             _canvasGroup.blocksRaycasts = true;
+        }
+        public override void OnExit()
+        {
+            this.gameObject.SetActive(false);
         }
 
         private void AddBtnListener()
@@ -36,11 +41,13 @@ namespace TocClient
             _startBtn.onClick.AddListener(()=>
             {
                 Debug.Log("startGame");
-                //UIManager.Instance.PushPanel(panelType);
+                UIManager.Instance.PopPanel();
+                UIManager.Instance.PushPanel(Constants.Form_BattleTest);
             });
             _exitBtn.onClick.AddListener(() =>
             {
                 Debug.Log("ExitGame");
+                UIManager.Instance.PopPanel();
                 //UIManager.Instance.PushPanel(panelType);
             });
         }

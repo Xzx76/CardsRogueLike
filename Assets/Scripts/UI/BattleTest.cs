@@ -3,7 +3,7 @@ using System.Collections;
 /// <summary>
 /// 商城
 /// </summary>
-public class ShopPanel : BasePanel {
+public class BattleTest : BasePanel {
 
     private CanvasGroup canvasGroup;
     private void Start()
