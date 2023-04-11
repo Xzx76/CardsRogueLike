@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8982fe2498fe4da41960c2b2bbb57de1, type: 3}
-  m_Name: 1
+  m_Script: {fileID: 11500000, guid: a75cbbdce6046904cac588f5e5593030, type: 3}
+  m_Name: NewCard
   m_EditorClassIdentifier: 
-  cardID: 1
-  cost: 1
-  quility: 0
-  cardType: 1
-  baseValue: 5
-  cardName: "\u5FCD\u8010"
-  desc: "\u9644\u52A0%\u70B9\u62A4\u7532"
+  cardType: 0
+  cardQuality: 0
+  cardSprite: {fileID: 0}
+  expend: 0
+  title: 
+  express: 
+  desc: 
+  dictData: []
+  dictAddData: []
