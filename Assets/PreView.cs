@@ -23,7 +23,7 @@ public class PreView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private int saveOrder;
     private Transform cardImg;
     public Image CardImg;
-    private DragNoTarget dragNoTarget;
+    private DragWithTarget dragNoTarget;
     private BezierArrows arrows;
     private RectTransform ArrowSlot;
     private Canvas cv;
@@ -34,9 +34,9 @@ public class PreView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         cardImg = UnityHelper.GetComponent<Transform>(this.gameObject, "Image");
         CardImg = UnityHelper.GetComponent<Image>(this.gameObject, "Image");
         ArrowSlot = UnityHelper.GetComponent<RectTransform>(this.gameObject, "ArrowSlot");
-        if (GetComponent<DragNoTarget>() != null)
+        if (GetComponent<DragWithTarget>() != null)
         {
-            dragNoTarget = GetComponent<DragNoTarget>();
+            dragNoTarget = GetComponent<DragWithTarget>();
         }
         else
         {

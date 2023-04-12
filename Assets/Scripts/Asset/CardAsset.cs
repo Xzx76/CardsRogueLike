@@ -44,8 +44,11 @@ namespace Asset
         [BoxGroup("材质")] [ShowAssetPreview()] public Sprite cardSprite;
 
         [BoxGroup("数据")]
-        [MinValue(0), MaxValue(5), Tooltip("消耗")]
-        public int expend;
+        [Tooltip("消耗")]
+        public int Expend;
+        [BoxGroup("数据")]
+        [Tooltip("时间消耗")]
+        public int TimeExpend;
 
         [BoxGroup("数据")] public string cardName;
 
@@ -92,7 +95,7 @@ namespace Asset
             dictAddData.Add(new DictData('X', PlayerAsset.Instance.strength));
             dictAddData.Add(new DictData('Y', PlayerAsset.Instance.agility));
             //X-玩家力量 Y-玩家敏捷
-            Debug.Log(PlayerAsset.Instance.maxHp + "\t" + PlayerAsset.Instance.currentHp + "\t" + PlayerAsset.Instance.strength);
+            //Debug.Log(PlayerAsset.Instance.maxHp + "\t" + PlayerAsset.Instance.currentHp + "\t" + PlayerAsset.Instance.strength);
             //重写
             InitCardAsset();
         }

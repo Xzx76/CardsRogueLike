@@ -5,7 +5,7 @@ using DG.Tweening;
 using TocClient;
 using System.Collections.Generic;
 
-public class q : MonoBehaviour
+public class FightManager : MonoBehaviour
 {
     public Transform root; //Canvas
     public Image pic;
@@ -67,6 +67,21 @@ public class q : MonoBehaviour
             pics[i].GetComponent<PreView>().SetCardSate(new Vector3(-(width * ((float)(length - 1) / 2 - i)), num, 0), new Vector3(0, 0, angl * ((float)(length - 1) / 2 - i)), i);
         }
     }
+    /// <summary>
+    /// 打乱List的方法
+    /// </summary>
+    /// <param name="input">所需打乱的List</param>
+    /// <typeparam name="T">List的类型</typeparam>
+    /// <returns></returns>
+    private List<T> Disorganize<T>(List<T> input)
+    {
+        List<T> output = new List<T>();
+        foreach (var item in input)
+        {
+            output.Insert(Random.Range(0, output.Count), item);
+        }
+        return output;
+    }
     IEnumerator CreateCards()
     {
         for (int i = 0; i < length; i++)
@@ -100,10 +115,10 @@ public class q : MonoBehaviour
     {
         var animSeque = DOTween.Sequence();
         pics[cardIdx].GetComponent<PreView>().CardCreateFinish = false;
-        animSeque.Append(pics[cardIdx].transform.DOLocalMoveY(pics[cardIdx].transform.localPosition.y + 80f, 0.5f));
+        animSeque.Append(pics[cardIdx].transform.DOLocalMoveY(pics[cardIdx].transform.localPosition.y + 200f, 0.5f));
         animSeque.Append(pics[cardIdx].transform.DOLocalMove(usedCardGroup.localPosition, 0.5f));
         animSeque.Insert(0.2f, pics[cardIdx].GetComponent<PreView>().CardImg.DOColor(Color.white, 0.8f));
-        animSeque.Insert(0.4f, pics[cardIdx].transform.DOScale(Vector3.zero, 0.6f));
+        animSeque.Insert(0.2f, pics[cardIdx].transform.DOScale(Vector3.zero, 0.6f));
         animSeque.Insert(0.5f, pics[cardIdx].transform.DOLocalRotate(new Vector3(0, 0, -360), 0.4f, RotateMode.FastBeyond360)
                 .SetLoops(-1, LoopType.Restart));
         yield return new WaitForSeconds(0.5f);
