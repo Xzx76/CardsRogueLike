@@ -10,5 +10,7 @@ public class Constants
 
         public const string Form_MainMenu = "MainMenu";
         public const string Form_BattleTest = "BattleTest";
+
+        public const string Msg_UseCard = "Msg_UseCard";
     }
 }
