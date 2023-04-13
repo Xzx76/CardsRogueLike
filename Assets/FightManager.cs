@@ -42,6 +42,16 @@ public class FightManager : MonoBehaviour
                 CardInGroup.Add(PairMgr.Instance.TestCard1);
         }
     }
+
+/*//取得YourClassName中的名称为foo的方法
+Type className = Type(YourClassName)
+MethodInfo method = className.GetMethod("foo");
+
+*//*取得方法的参数个数、参数类型和名称、返回值类型*//*
+Console.Out.WriteLine(method.ReturnType.ToString());
+Console.Out.WriteLine(method.GetGenericArguments());
+Console.Out.WriteLine(method.GetParameters().Length);
+Console.Out.WriteLine(method.GetParameters()[0].ToString())*/
     void Update()
     {
     }

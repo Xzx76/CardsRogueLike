@@ -42,12 +42,12 @@ public class DragWithTarget : MonoBehaviour, IBeginDragHandler, IDragHandler, IE
 
         foreach (var rayResult in raycastResults)
         {
-            if (rayResult.gameObject.tag == "Enemy")
+            if (rayResult.gameObject.tag == "Enemy"&&preView.CardInfo.Target== "Enemy")
             {
                 preView.TurnArrowColor(1);
                 return;
             }
-            else if (rayResult.gameObject.tag == "Player")
+            else if (rayResult.gameObject.tag == "Player" && preView.CardInfo.Target == "Player")
             {
                 preView.TurnArrowColor(2);
                 return;

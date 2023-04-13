@@ -25,3 +25,5 @@ MonoBehaviour:
     data: 6
   dictAddData: []
   Upgrade: {fileID: 0}
+  Effect: {fileID: 0}
+  Target: Enemy

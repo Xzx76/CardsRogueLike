@@ -33,6 +33,7 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
     private BezierArrows arrows;
     private RectTransform ArrowSlot;
     private Canvas cv;
+    private CardAsset cardInfo;
 
     public bool CardCreateFinish;
     public bool CanUse;
@@ -45,6 +46,11 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
             costNum.text = value.Expend.ToString();
             cardName.text = value.cardName;
             cardDesc.text = value.desc;
+            cardInfo = value;
+        }
+        get
+        {
+            return cardInfo;
         }
     }
     public void Init()

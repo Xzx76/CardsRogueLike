@@ -59,6 +59,7 @@ namespace Asset
         [BoxGroup("数据"), Label("玩家加成数据")] [ReorderableList] public List<DictData> dictAddData;
         [BoxGroup("数据"), Label("升级卡牌")] public CardAsset Upgrade;
         [BoxGroup("数据"), Label("卡牌效果")] public CardEffect Effect;
+        [BoxGroup("数据"), Label("目标")] public string Target;
         /// <summary>
         /// 写入配置
         /// </summary>
