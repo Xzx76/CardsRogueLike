@@ -19,6 +19,8 @@ public class FightManager : MonoBehaviour
     [SerializeField]
     public int roundHeadCardNum;
 
+    private Action roundOver;
+
     private int seed = 24675120;
     private System.Random random;
     private List<GameObject> headCards;//手卡物体
