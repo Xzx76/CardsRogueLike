@@ -49,6 +49,7 @@ namespace TocClient
             gameObject.AddComponent<AssetManager>();
             gameObject.AddComponent<UIManager>();
             gameObject.AddComponent<MsgSystem>();
+            gameObject.AddComponent<PairMgr>();
             //gameObject.AddComponent<AudioManager>();
             StartCoroutine(nameof(CheckHotUpdate));
 

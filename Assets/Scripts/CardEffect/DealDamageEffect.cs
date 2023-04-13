@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DealDamageEffect : CardEffect
+namespace Asset
 {
-    public override void Resolve(PlayerAsset player)
+    public class DealDamageEffect : CardEffect
     {
-        
+        public override void Resolve(PlayerController player = null, List<EnemyController> enemys = null, EnemyController enemy = null)
+        {
+            
+        }
     }
 }
+

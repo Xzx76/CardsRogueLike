@@ -45,15 +45,7 @@ public class FightManager : MonoBehaviour
         }
     }
 
-/*//取得YourClassName中的名称为foo的方法
-Type className = Type(YourClassName)
-MethodInfo method = className.GetMethod("foo");
 
-*//*取得方法的参数个数、参数类型和名称、返回值类型*//*
-Console.Out.WriteLine(method.ReturnType.ToString());
-Console.Out.WriteLine(method.GetGenericArguments());
-Console.Out.WriteLine(method.GetParameters().Length);
-Console.Out.WriteLine(method.GetParameters()[0].ToString())*/
     void Update()
     {
     }
@@ -137,6 +129,10 @@ Console.Out.WriteLine(method.GetParameters()[0].ToString())*/
     void UseCard(int cardIdx)
     {
         var usedCard = CardsInHead[cardIdx];
+        for (int i = 0; i < usedCard.Effects.Count; i++)
+        {
+            usedCard.Effects[i].Resolve();
+        }
         CardsInHead.RemoveAt(cardIdx);
         CardsUsed.Add(usedCard);
         StartCoroutine(UseCards(cardIdx));
