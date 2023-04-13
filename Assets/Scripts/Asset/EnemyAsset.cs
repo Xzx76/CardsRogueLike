@@ -13,7 +13,7 @@ namespace Asset
         public int currentHp;
         public int strength;
         public int agility;
-
+        public CardEffect Effect;
     }
 }
 
