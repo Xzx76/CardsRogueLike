@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a75cbbdce6046904cac588f5e5593030, type: 3}
-  m_Name: 0
+  m_Name: Hit
   m_EditorClassIdentifier: 
   cardType: 0
   cardQuality: 0
-  cardSprite: {fileID: 0}
-  expend: 0
-  cardName: 
-  express: 
-  desc: 
-  dictData: []
+  cardSprite: {fileID: 21300000, guid: 26e9e0ad54b18c84791b089a093e1144, type: 3}
+  Expend: 1
+  TimeExpend: 2
+  cardName: "\u6253\u51FB"
+  express: "\u9020\u6210x\u4F24\u5BB3"
+  desc: "\u9020\u62106\u4F24\u5BB3"
+  dictData:
+  - key: 120
+    data: 6
   dictAddData: []
+  Upgrade: {fileID: 0}

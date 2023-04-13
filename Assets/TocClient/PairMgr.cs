@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Asset;
 using LitJson;
 using TocClient;
 using UnityEngine;
@@ -15,9 +16,11 @@ namespace TocClient
         private Dictionary<string, string> _language;
         private Dictionary<string, MapInfo> _mapInfo;
 
+        public CardAsset TestCard;
         public override void Init()
         {
             _language = new Dictionary<string, string>();
+            LoadCardAsset();
             //初始化状态
             _hasInit = true;
         }
@@ -48,6 +51,14 @@ namespace TocClient
             if (!_language.TryGetValue(key, out string val))
                 return key;
             return val;
+        }
+        private void LoadCardAsset()
+        {
+            AssetManager.Instance.LoadAssetAsync<CardAsset>("Hit",asset=>
+            {
+                TestCard = asset;
+            });
+            AssetManager.Instance.CreatePoolAsync("CardPrefab");
         }
         /// <summary>
         /// 获取英雄类型显示名称

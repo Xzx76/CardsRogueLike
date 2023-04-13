@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragWithTarget : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragWithTarget : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public bool dragging = false;
     private bool selectMode = true;
-    private PreView preView;
+    private CardViewController preView;
     private void Awake()
     {
-        if (GetComponent<PreView>() != null)
+        if (GetComponent<CardViewController>() != null)
         {
-            preView = GetComponent<PreView>();
+            preView = GetComponent<CardViewController>();
         }
         else
         {
@@ -63,7 +63,7 @@ public class DragWithTarget : MonoBehaviour, IPointerClickHandler, IBeginDragHan
     }
 
     //选取模式
-    public void OnPointerClick(PointerEventData eventData)
+/*    public void OnPointerClick(PointerEventData eventData)
     {
         //点击鼠标左键
         if (selectMode && eventData.button == PointerEventData.InputButton.Left)
@@ -76,7 +76,7 @@ public class DragWithTarget : MonoBehaviour, IPointerClickHandler, IBeginDragHan
                 preView.DragPreview();
             }
         }
-    }
+    }*/
 
 /*    //拖拽中每帧更新位置
     private void Update()

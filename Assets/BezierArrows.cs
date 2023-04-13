@@ -42,7 +42,6 @@ public class BezierArrows : MonoBehaviour
         for (int i = 0; i < this.arrowNodes.Count; i++)
         {
             var t = Mathf.Log(1f * i / (this.arrowNodes.Count - 1) + 1f, 2f);
-            Debug.Log("I=" + i);
             this.arrowNodes[i].position =
                 Mathf.Pow(1 - t, 3) * this.controlPoints[0] +
                 3 * Mathf.Pow(1 - t, 2) * t * this.controlPoints[1] +
