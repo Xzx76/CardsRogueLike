@@ -18,6 +18,8 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
     private Image cardIcon;
     private Text cardDesc;
 
+    private Vector3 savePot;
+    private Vector3 saveRot;
     [SerializeField]
     private float upmove;
     [SerializeField]
@@ -34,16 +36,27 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
 
     public bool CardCreateFinish;
     public bool CanUse;
-    public CardAsset cardAsset;
+    public CardAsset CardInfo
+    {
+        set
+        {
+            CardImg.sprite = PairMgr.Instance.GetCardQuility((int)value.cardQuality);
+            cardIcon.sprite = value.cardSprite;
+            costNum.text = value.Expend.ToString();
+            cardName.text = value.cardName;
+            cardDesc.text = value.desc;
+        }
+    }
     public void Init()
     {
-        cardImgTrans = UnityHelper.GetComponent<Transform>(this.gameObject, "CardShow");
+        /* cardImgTrans = UnityHelper.GetComponent<Transform>(this.gameObject, "CardShow");*/
+        cardImgTrans = this.transform;
         CardImg = UnityHelper.GetComponent<Image>(this.gameObject, "CardShow");
         ArrowSlot = UnityHelper.GetComponent<RectTransform>(this.gameObject, "CardShow/ArrowSlot");
 
         costNum = UnityHelper.GetComponent<Text>(this.gameObject, "CardShow/CostNum");
         cardName = UnityHelper.GetComponent<Text>(this.gameObject, "CardShow/CardName");
-        cardName = UnityHelper.GetComponent<Text>(this.gameObject, "CardShow/Desc");
+        cardDesc = UnityHelper.GetComponent<Text>(this.gameObject, "CardShow/Desc");
         cardIcon = UnityHelper.GetComponent<Image>(this.gameObject, "CardShow/Icon");
         if (GetComponent<DragWithTarget>() != null)
         {
@@ -134,8 +147,8 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
             MsgSystem.Instance.Dispatch<int>(Constants.Msg_UseCard, saveOrder);
             return;
         }
-        cardImgTrans.DOLocalMove(Vector3.zero, 0.1f);
-        cardImgTrans.DOLocalRotate(Vector3.zero, 0.1f);
+        cardImgTrans.DOLocalMove(savePot, 0.1f);
+        cardImgTrans.DOLocalRotate(saveRot, 0.1f);
         cardImgTrans.localScale = Vector3.one;
         cv.sortingOrder = saveOrder;
         ArrowSlot.gameObject.SetActive(false);
@@ -154,15 +167,15 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
     private void StartPreView()
     {
         cardImgTrans.DOLocalMoveY(upmove, animTime);
-        cardImgTrans.DOLocalRotate(new Vector3(-transform.rotation.eulerAngles.x, transform.eulerAngles.y,-transform.rotation.eulerAngles.z), animTime);
+        cardImgTrans.DOLocalRotate(new Vector3(0, 0,0), animTime);
         cardImgTrans.localScale = new Vector3(scaleUper, scaleUper, scaleUper);
         cv.sortingOrder += 100;
     }
 
     private void EndPreView()
     {
-        cardImgTrans.DOLocalMove(Vector3.zero, 0.1f);
-        cardImgTrans.DOLocalRotate(Vector3.zero, 0.1f);
+        cardImgTrans.DOLocalMove(savePot, 0.1f);
+        cardImgTrans.DOLocalRotate(saveRot, 0.1f);
         cardImgTrans.localScale = Vector3.one;
         cv.sortingOrder = saveOrder;
     }
@@ -170,6 +183,8 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
     //储存卡牌的初始状态
     public void SetCardSate(Vector3 position,Vector3 rotation,int idx)
     {
+        savePot = position;
+        saveRot = rotation;
         saveOrder = idx;
         cv.sortingOrder = idx;
     }

@@ -15,12 +15,15 @@ namespace TocClient
         private int _checkCount = 0;
         private Dictionary<string, string> _language;
         private Dictionary<string, MapInfo> _mapInfo;
-
+        private Dictionary<int, Sprite> cardQuilitySprites;
         public CardAsset TestCard;
+        public CardAsset TestCard1;
         public override void Init()
         {
             _language = new Dictionary<string, string>();
+            cardQuilitySprites = new();
             LoadCardAsset();
+            LoadCardQuilitySprite();
             //初始化状态
             _hasInit = true;
         }
@@ -52,13 +55,35 @@ namespace TocClient
                 return key;
             return val;
         }
+        public Sprite GetCardQuility(int quility)
+        {
+            if (cardQuilitySprites.TryGetValue(quility,out Sprite img))
+                return img;
+            return null;
+        }
         private void LoadCardAsset()
         {
             AssetManager.Instance.LoadAssetAsync<CardAsset>("Hit",asset=>
             {
                 TestCard = asset;
+            });            
+            AssetManager.Instance.LoadAssetAsync<CardAsset>("AexHit", asset=>
+            {
+                TestCard1 = asset;
             });
             AssetManager.Instance.CreatePoolAsync("CardPrefab");
+        }
+        private void LoadCardQuilitySprite()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                int idx = i;
+                AssetManager.Instance.LoadAssetAsync<Sprite>("CardQuility" + idx, sprite=>
+                   {
+                       cardQuilitySprites.Add(idx, sprite);
+                   });
+            }
+            
         }
         /// <summary>
         /// 获取英雄类型显示名称
