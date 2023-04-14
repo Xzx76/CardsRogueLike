@@ -58,6 +58,8 @@ namespace Asset
         [BoxGroup("数据"), Label("卡牌效果")] public List<CardEffect> Effects;
         [BoxGroup("数据"), Label("卡牌效果文字")] public List<string> EffectNames;
         [BoxGroup("数据"), Label("目标")] public string Target;
+
+        Action _cardAttrChangeCb;
         /// <summary>
         /// 写入配置
         /// </summary>
@@ -85,20 +87,7 @@ namespace Asset
 
                 desc += currChar;
             }
-/*            foreach (var item in dictData)
-            {
-                if (AttributeDic.TryGetValue(item.key, out int value))
-                    value += item.data;
-                else
-                    AttributeDic.Add(item.key, item.data);
-            }
-            foreach (var item in dictAddData)
-            {
-                if (AttributeDic.TryGetValue(item.key, out int value))
-                    value += item.data;
-                else
-                    AttributeDic.Add(item.key, item.data);
-            }*/
+            _cardAttrChangeCb?.Invoke();
         }
         /// <summary>
         /// 更新卡牌
@@ -113,6 +102,10 @@ namespace Asset
             //Debug.Log(PlayerAsset.Instance.maxHp + "\t" + PlayerAsset.Instance.currentHp + "\t" + PlayerAsset.Instance.strength);
             //重写
             InitCardAsset();
+        }
+        public void SetChangeEvent(System.Action cb)
+        {
+            _cardAttrChangeCb = cb;
         }
         [Button("写入卡牌效果")]
         public void SetEffect()

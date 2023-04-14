@@ -135,6 +135,13 @@ public class FightManager : MonoBehaviour
         CardsUsed.Add(usedCard);
         StartCoroutine(DropCard(cardIdx));
     }
+    public void UpDateHeadCard()
+    {
+        foreach (var item in CardInGroup)
+        {
+            item.UpdateCard();
+        }
+    }
     void UseCard(int cardIdx)
     {
         var usedCard = CardsInHead[cardIdx];
