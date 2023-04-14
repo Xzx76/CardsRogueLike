@@ -17,13 +17,32 @@ MonoBehaviour:
   cardSprite: {fileID: 21300000, guid: cbde5877e47a04d808481b8c2f14ecca, type: 3}
   Expend: 1
   cardName: "\u65A7\u5934\u6253\u51FB"
-  express: "\u9020\u6210x\u4F24\u5BB3"
+  express: "\u9020\u6210X\u4F24\u5BB3"
   desc: "\u9020\u621010\u4F24\u5BB3"
   dictData:
-  - key: 120
+  - key: 88
     data: 10
-  dictAddData: []
+  dictAddData:
+  - key: 88
+    data: 0
+  - key: 89
+    data: 0
   Upgrade: {fileID: 0}
-  Effects: []
-  EffectNames: []
-  Target: Enemy
+  Effects:
+  - {fileID: 4281955373058606746}
+  EffectNames:
+  - Asset.DealDamageEffect
+  Target: Player
+--- !u!114 &4281955373058606746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7472d2912589f47b598fa0261529a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Card: {fileID: 11400000}
