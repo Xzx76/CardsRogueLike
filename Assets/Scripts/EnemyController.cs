@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField]
-    private PlayerAsset asset;
+    private EnemyAsset asset;
 
     public void OnAttack(int damage)
     {

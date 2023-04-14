@@ -19,7 +19,7 @@ namespace TocClient
         private static LoadCheck[] _loadComplete = null;
         private static int _checkCount = 0;
         private bool _isGameStart;
-
+        public Transform BattleRoot;
         public void SetInitReady()
         {
             _initReady = true;
@@ -45,7 +45,7 @@ namespace TocClient
             DontDestroyOnLoad(gameObject);
             _loadComplete = new LoadCheck[10];
             _checkCount = 0;
-            //³õÊ¼»¯ÓÎÏ·¿ò¼Ü£º×ÊÔ´¹ÜÀí¡¢ÒôĞ§¹ÜÀí¡¢ÌØĞ§¹ÜÀí¡¢UI¹ÜÀí
+            //åˆå§‹åŒ–æ¸¸æˆæ¡†æ¶ï¼šèµ„æºç®¡ç†ã€éŸ³æ•ˆç®¡ç†ã€ç‰¹æ•ˆç®¡ç†ã€UIç®¡ç†
             gameObject.AddComponent<AssetManager>();
             gameObject.AddComponent<UIManager>();
             gameObject.AddComponent<MsgSystem>();
@@ -61,33 +61,38 @@ namespace TocClient
 
         IEnumerator CheckHotUpdate()
         {
-            //°æ±¾¿ØÖÆ£¬¼ì²é×ÊÔ´¸üĞÂ
+            //ç‰ˆæœ¬æ§åˆ¶ï¼Œæ£€æŸ¥èµ„æºæ›´æ–°
             //TODO
 
-            //¼ÓÔØUI¹ÜÀíÆ÷
+            //åŠ è½½UIç®¡ç†å™¨
             AsyncOperationHandle handle = AssetManager.Instance.InstantiateWithOpr("Prefab_UI_UIRoot");
             yield return handle;
             GameObject uiRoot = handle.Result as GameObject;
             DontDestroyOnLoad(uiRoot);
             Transform root = uiRoot.transform;
+            AsyncOperationHandle handle1 = AssetManager.Instance.InstantiateWithOpr("Battle_Root");
+            yield return handle1;
+            GameObject battleRoot = handle1.Result as GameObject;
+            BattleRoot = battleRoot.transform;
+            DontDestroyOnLoad(battleRoot);
             //AssetManager.Instance.Add(TransName.UIRoot, root);
             //AssetManager.Instance.Add(TransName.UICamera, root.Find("UICamera"));
             //UIFormManager.Instance.Init(new FormFactory(), root, root.Find("NormalRoot"), root.Find("UnderRoot"), root.Find("PopupRoot"));
 
-            //×ÊÔ´¼ÓÔØ
+            //èµ„æºåŠ è½½
             GameInit();
             while (!_initReady)
             {
                 yield return 0;
             }
-            //×ÊÔ´¼ÓÔØÍê³É£¬¿ªÊ¼½øÈëÓÎÏ·
+            //èµ„æºåŠ è½½å®Œæˆï¼Œå¼€å§‹è¿›å…¥æ¸¸æˆ
             EnterGame();
             yield break;
         }
 
         public void GameInit()
         {
-            //ÀàĞÍ¹ÜÀíÆ÷³õÊ¼»¯
+            //ç±»å‹ç®¡ç†å™¨åˆå§‹åŒ–
             PairMgr.Instance.LoadAsync();
             StartCoroutine("PerLoad");
 
@@ -96,12 +101,12 @@ namespace TocClient
         IEnumerator PerLoad()
         {
             yield return new WaitUntil(CheckPreLoad);
-            //³õÊ¼»¯Íê³É
+            //åˆå§‹åŒ–å®Œæˆ
             _initReady = true;
             yield break;
         }
 
-        //¼ì²éÇ°ÖÃ¼ÓÔØÊÇ·ñÒÑ¾­Íê³É
+        //æ£€æŸ¥å‰ç½®åŠ è½½æ˜¯å¦å·²ç»å®Œæˆ
         private bool CheckPreLoad()
         {
             for (int i = 0; i < _checkCount; i++)
@@ -112,12 +117,12 @@ namespace TocClient
             return true;
         }
         /// <summary>
-        /// Ìí¼ÓÇ°ÖÃ¼ÓÔØ¼ì²â
+        /// æ·»åŠ å‰ç½®åŠ è½½æ£€æµ‹
         /// </summary>
         /// <param name="check"></param>
         public static void AddloadCheck(LoadCheck check)
         {
-            //´æ´¢Êı×é²»¹»Ê±Ôö¼Ó10
+            //å­˜å‚¨æ•°ç»„ä¸å¤Ÿæ—¶å¢åŠ 10
             if (_loadComplete.Length <= _checkCount)
             {
                 LoadCheck[] temp = new LoadCheck[_checkCount + 10];
@@ -135,7 +140,7 @@ namespace TocClient
             _isGameStart = true;
             _loadComplete = null;
             _checkCount = 0;
-            //½øÈëÖ÷²Ëµ¥
+            //è¿›å…¥ä¸»èœå•
             UIManager.Instance.PushPanel(Constants.Form_MainMenu);
         }
         private void Update()

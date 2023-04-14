@@ -12,5 +12,6 @@ public class Constants
         public const string Form_BattleTest = "BattleTest";
 
         public const string Msg_UseCard = "Msg_UseCard";
+        public const string Msg_PlayerHealthChange = "Msg_PlayerHealthChange";
     }
 }

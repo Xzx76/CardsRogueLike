@@ -13,8 +13,12 @@ public class BattleTest : BasePanel {
     private Button endTurn;
     private Button dropFirstCard;
     private Button getOneCard;
+    private SpriteRaycasterFollow playerRayCaster;
+    private Slider healthBar;
+    private Text healthText;
     private void Start()
     {
+        MsgSystem.Instance.AddListener<int,int>(Constants.Msg_PlayerHealthChange, PlayerHealthChange);
         if (canvasGroup == null)
         {
             canvasGroup = GetComponent<CanvasGroup>();
@@ -24,7 +28,20 @@ public class BattleTest : BasePanel {
         endTurn = UnityHelper.GetComponent<Button>(this.gameObject, "EndTurn");
         dropFirstCard = UnityHelper.GetComponent<Button>(this.gameObject, "DropFirstCard");
         getOneCard = UnityHelper.GetComponent<Button>(this.gameObject, "GetOneCard");
+        playerRayCaster = UnityHelper.GetComponent<SpriteRaycasterFollow>(this.gameObject, "player");
+        healthBar = UnityHelper.GetComponent<Slider>(this.gameObject, "HealthBar");
+        healthText = UnityHelper.GetComponent<Text>(this.gameObject, "HealthBar/HealthNum");
+
         RegisterAllLisenter();
+    }
+    public void SetPlayer(Transform player)
+    {
+        playerRayCaster.PlayerTrans = player;
+    }
+    private void PlayerHealthChange(int currencyHp,int maxHp)
+    {
+        healthBar.value = (float)currencyHp / maxHp;
+        healthText.text = currencyHp + "/" + maxHp;
     }
     private void RegisterAllLisenter()
     {

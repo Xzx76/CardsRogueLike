@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestPlayer
   m_EditorClassIdentifier: 
   maxHp: 50
-  currentHp: 0
+  currentHp: 50
   strength: 0
   agility: 0

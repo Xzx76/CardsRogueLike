@@ -25,12 +25,16 @@ public class FightManager : MonoBehaviour
     private System.Random random;
     private List<GameObject> headCards;//手卡物体
 
+    private BattleTest battleUI;
     public List<CardAsset> CardGroup;//卡组
     public List<CardAsset> CardInGroup;//牌堆
     public List<CardAsset> CardsUsed;//弃牌堆
     public List<CardAsset> CardsInHead;//手卡
+
+    private PlayerController player;
     private void Awake()
     {
+        battleUI = this.transform.parent.GetComponent<BattleTest>();
         random = new System.Random(seed);
         MsgSystem.Instance.AddListener<int>(Constants.Msg_UseCard, UseCard);
     }
@@ -43,6 +47,11 @@ public class FightManager : MonoBehaviour
             else
                 CardInGroup.Add(PairMgr.Instance.TestCard1);
         }
+        AssetManager.Instance.InstantiateAsync("Player", obj =>
+         {
+             player = obj.GetComponent<PlayerController>();
+             battleUI.SetPlayer(obj.transform);
+         },GameLaunch.Instance.BattleRoot);
     }
 
 
@@ -131,7 +140,7 @@ public class FightManager : MonoBehaviour
         var usedCard = CardsInHead[cardIdx];
         for (int i = 0; i < usedCard.Effects.Count; i++)
         {
-            usedCard.Effects[i].Resolve();
+            usedCard.Effects[i].Resolve(player);
         }
         CardsInHead.RemoveAt(cardIdx);
         CardsUsed.Add(usedCard);
@@ -234,17 +243,17 @@ public class FightManager : MonoBehaviour
     {
         var animSeque = DOTween.Sequence();
         headCards[cardIdx].GetComponent<CardViewController>().CardCreateFinish = false;
-        animSeque.Append(headCards[cardIdx].transform.DOLocalMoveY(headCards[cardIdx].transform.localPosition.y + 200f, 0.5f));
-        animSeque.Append(headCards[cardIdx].transform.DOLocalMove(usedCardGroup.localPosition, 0.5f));
-        animSeque.Insert(0.2f, headCards[cardIdx].GetComponent<CardViewController>().CardImg.DOColor(Color.white, 0.8f));
-        animSeque.Insert(0.2f, headCards[cardIdx].transform.DOScale(Vector3.zero, 0.6f));
-        animSeque.Insert(0.5f, headCards[cardIdx].transform.DOLocalRotate(new Vector3(0, 0, -360), 0.4f, RotateMode.FastBeyond360)
+        animSeque.Append(headCards[cardIdx].transform.DOLocalMoveY(headCards[cardIdx].transform.localPosition.y + 200f, 0.2f));
+        animSeque.Append(headCards[cardIdx].transform.DOLocalMove(usedCardGroup.localPosition, 0.7f));
+        animSeque.Insert(0.2f, headCards[cardIdx].GetComponent<CardViewController>().CardImg.DOColor(Color.white, 0.7f));
+        animSeque.Insert(0.2f, headCards[cardIdx].transform.DOScale(Vector3.zero, 0.7f));
+        animSeque.Insert(0.2f, headCards[cardIdx].transform.DOLocalRotate(new Vector3(0, 0, -360), 0.7f, RotateMode.FastBeyond360)
                 .SetLoops(-1, LoopType.Restart));
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         Transform tmp = headCards[cardIdx].transform;
         headCards.RemoveAt(cardIdx);
         ReSortHeadCards();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         Destroy(tmp.gameObject);
     }
     /// <summary>

@@ -16,7 +16,6 @@ MonoBehaviour:
   cardQuality: 0
   cardSprite: {fileID: 21300000, guid: 26e9e0ad54b18c84791b089a093e1144, type: 3}
   Expend: 1
-  TimeExpend: 2
   cardName: "\u6253\u51FB"
   express: "\u9020\u6210x\u4F24\u5BB3"
   desc: "\u9020\u62106\u4F24\u5BB3"
@@ -25,5 +24,6 @@ MonoBehaviour:
     data: 6
   dictAddData: []
   Upgrade: {fileID: 0}
-  Effect: {fileID: 0}
+  Effects: []
+  EffectNames: []
   Target: Enemy

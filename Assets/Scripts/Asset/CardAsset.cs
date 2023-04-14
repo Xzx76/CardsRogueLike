@@ -85,6 +85,20 @@ namespace Asset
 
                 desc += currChar;
             }
+/*            foreach (var item in dictData)
+            {
+                if (AttributeDic.TryGetValue(item.key, out int value))
+                    value += item.data;
+                else
+                    AttributeDic.Add(item.key, item.data);
+            }
+            foreach (var item in dictAddData)
+            {
+                if (AttributeDic.TryGetValue(item.key, out int value))
+                    value += item.data;
+                else
+                    AttributeDic.Add(item.key, item.data);
+            }*/
         }
         /// <summary>
         /// 更新卡牌
@@ -109,6 +123,7 @@ namespace Asset
                 if (effect != null)
                 {
                     effect.hideFlags = HideFlags.HideInHierarchy;
+                    effect.Card = this;
                     Effects.Add(effect);
                     AssetDatabase.AddObjectToAsset(effect, this);
                 }
