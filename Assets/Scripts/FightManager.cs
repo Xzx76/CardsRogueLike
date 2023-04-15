@@ -6,50 +6,50 @@ using TocClient;
 using System.Collections.Generic;
 using Asset;
 using System;
+using NaughtyAttributes;
 
 public class FightManager : MonoBehaviour
 {
-    public Transform root; //Canvas
-
+    #region 卡牌生成参数
+    private int seed = 24675120;
     public float width = 120f;//图片间距
     public float angl = 8;//图片角度差
     public Transform cardGroup;
     public Transform usedCardGroup;
-
-    [SerializeField]
-    public int roundHeadCardNum;
-
-    private Action roundOver;
-
-    private int seed = 24675120;
-    private System.Random random;
-    private List<GameObject> headCards;//手卡物体
-
-    private BattleTest battleUI;
+    public Transform root; //Canvas
+    #endregion
+    #region 局内卡牌数据
+    public int RoundHeadCardNum;
     public List<CardAsset> CardGroup;//卡组
     public List<CardAsset> CardInGroup;//牌堆
     public List<CardAsset> CardsUsed;//弃牌堆
     public List<CardAsset> CardsInHead;//手卡
-
+    private List<GameObject> headCards;//手卡物体
+    #endregion
+    private Action roundOver;
+    private System.Random random;
+    private BattleTest battleUI;
     private PlayerController player;
+
     private void Awake()
     {
         battleUI = this.transform.parent.GetComponent<BattleTest>();
         random = new System.Random(seed);
         MsgSystem.Instance.AddListener<int>(Constants.Msg_UseCard, UseCard);
+        MsgSystem.Instance.AddListener(Constants.Msg_PlayerAttributeChange, UpDateHeadCard);
     }
     void Start()
     {
         for (int i = 0; i < 20; i++)
         {
-            if (i<9)
-                CardInGroup.Add(PairMgr.Instance.TestCard);
-            else
-                CardInGroup.Add(PairMgr.Instance.TestCard1);
+            var card = PairMgr.Instance.Cards[random.Next(0,3)];
+            CardInGroup.Add(card);
+
         }
         AssetManager.Instance.InstantiateAsync("Player", obj =>
          {
              player = obj.GetComponent<PlayerController>();
+             player.InitPlayerAsset();
              battleUI.SetPlayer(obj.transform);
          },GameLaunch.Instance.BattleRoot);
     }
@@ -58,6 +58,7 @@ public class FightManager : MonoBehaviour
     void Update()
     {
     }
+    #region 卡牌处理
     /// <summary>
     /// 抽卡
     /// </summary>
@@ -119,7 +120,9 @@ public class FightManager : MonoBehaviour
         CardInGroup.RemoveAt(r);
         return cardData;
     }
-
+    /// <summary>
+    /// 丢弃所有手卡
+    /// </summary>
     public void DropAll()
     {
         for (int i = 0; i < CardsInHead.Count; i++)
@@ -128,6 +131,10 @@ public class FightManager : MonoBehaviour
         }
         StartCoroutine(DropAllCards());
     }
+    /// <summary>
+    /// 根据序列号丢弃卡牌
+    /// </summary>
+    /// <param name="cardIdx"></param>
     public void DropByIdx(int cardIdx=0)
     {
         var usedCard = CardsInHead[cardIdx];
@@ -135,13 +142,27 @@ public class FightManager : MonoBehaviour
         CardsUsed.Add(usedCard);
         StartCoroutine(DropCard(cardIdx));
     }
+    /// <summary>
+    /// 刷新手卡参数
+    /// </summary>
     public void UpDateHeadCard()
     {
         foreach (var item in CardInGroup)
         {
-            item.UpdateCard();
+            item.UpdateCard(player.Asset);
         }
     }
+    public void UpDateHeadCard(int idx)
+    {
+        if (CardInGroup.Count < idx)
+            return;
+        else
+            CardInGroup[idx].UpdateCard(player.Asset);
+    }
+    /// <summary>
+    /// 使用卡牌
+    /// </summary>
+    /// <param name="cardIdx"></param>
     void UseCard(int cardIdx)
     {
         var usedCard = CardsInHead[cardIdx];
@@ -187,17 +208,17 @@ public class FightManager : MonoBehaviour
             card.Init();
             card.CardInfo = CardsInHead[i];
             float num = 0;
-            if ((Mathf.Sin(Mathf.Deg2Rad * angl * ((float)(roundHeadCardNum - 1) / 2 - i)) == 0) || (roundHeadCardNum == 1))
+            if ((Mathf.Sin(Mathf.Deg2Rad * angl * ((float)(RoundHeadCardNum - 1) / 2 - i)) == 0) || (RoundHeadCardNum == 1))
                 num = 0;
             else
-                num = -(width * ((float)(roundHeadCardNum - 1) / 2 - i)) / Mathf.Sin(Mathf.Deg2Rad * angl * ((float)(roundHeadCardNum - 1) / 2 - i)) + (1f / (Mathf.Tan(Mathf.Deg2Rad * angl * ((float)(roundHeadCardNum - 1) / 2 - i))) * (width * ((float)(roundHeadCardNum - 1) / 2 - i)));
-            card.SetCardSate(new Vector3(-(width * ((float)(roundHeadCardNum - 1) / 2 - i)), num, 0), new Vector3(0, 0, angl * ((float)(roundHeadCardNum - 1) / 2 - i)), idx);
+                num = -(width * ((float)(RoundHeadCardNum - 1) / 2 - i)) / Mathf.Sin(Mathf.Deg2Rad * angl * ((float)(RoundHeadCardNum - 1) / 2 - i)) + (1f / (Mathf.Tan(Mathf.Deg2Rad * angl * ((float)(RoundHeadCardNum - 1) / 2 - i))) * (width * ((float)(RoundHeadCardNum - 1) / 2 - i)));
+            card.SetCardSate(new Vector3(-(width * ((float)(RoundHeadCardNum - 1) / 2 - i)), num, 0), new Vector3(0, 0, angl * ((float)(RoundHeadCardNum - 1) / 2 - i)), idx);
 
             tmpCard.transform.parent = root;
             animSeque.Append(tmpCard.transform.DOScale(Vector3.one, 0.5f));
-            animSeque.Insert(0.3f, tmpCard.transform.DOLocalMove(new Vector3(-(width * ((float)(roundHeadCardNum - 1) / 2 - i)), num, 0), 0.5f));
+            animSeque.Insert(0.3f, tmpCard.transform.DOLocalMove(new Vector3(-(width * ((float)(RoundHeadCardNum - 1) / 2 - i)), num, 0), 0.5f));
             animSeque.Insert(0.1f, card.CardImg.DOColor(Color.white, 0.7f));
-            animSeque.Insert(0.7f, tmpCard.transform.DOLocalRotate(new Vector3(0, 0, angl * ((float)(roundHeadCardNum - 1) / 2 - i)), 0.25f));
+            animSeque.Insert(0.7f, tmpCard.transform.DOLocalRotate(new Vector3(0, 0, angl * ((float)(RoundHeadCardNum - 1) / 2 - i)), 0.25f));
             animSeque.InsertCallback(0.95f, () =>
              {
                  card.CardCreateFinish = true;
@@ -298,4 +319,5 @@ public class FightManager : MonoBehaviour
         ReSortHeadCards();
         Destroy(tmp);
     }
+    #endregion
 }

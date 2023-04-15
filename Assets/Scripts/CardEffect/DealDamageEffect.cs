@@ -11,14 +11,16 @@ namespace Asset
 
         public override void Resolve(PlayerController player = null, List<EnemyController> enemys = null, EnemyController enemy = null)
         {
-            /*            player.OnAttack(Card.AttributeDic['X']);*/
-
             foreach (var t in Card.dictData)
             {
                 var value = 0;
                 if (t.key=='X')
                 {
-                    value = Card.dictAddData.FirstOrDefault(m => m.key == t.key).data+t.data;
+                    if (Card.dictAddData.Count != 0)
+                        value = Card.dictAddData.FirstOrDefault(m => m.key == t.key).data + t.data;
+                    else
+                        value = t.data;
+
                 }
                 player.OnAttack(value);
                 break;

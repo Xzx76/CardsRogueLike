@@ -47,7 +47,7 @@ public class BattleTest : BasePanel {
     {
         beginTurn.onClick.AddListener(()=>
         {
-            fightManager.DeliverCard(fightManager.roundHeadCardNum, false);
+            fightManager.DeliverCard(fightManager.RoundHeadCardNum, false);
         });
         endTurn.onClick.AddListener(() =>
         {

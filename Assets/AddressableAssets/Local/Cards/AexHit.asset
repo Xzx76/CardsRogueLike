@@ -22,11 +22,7 @@ MonoBehaviour:
   dictData:
   - key: 88
     data: 10
-  dictAddData:
-  - key: 88
-    data: 0
-  - key: 89
-    data: 0
+  dictAddData: []
   Upgrade: {fileID: 0}
   Effects:
   - {fileID: 4281955373058606746}

@@ -22,7 +22,6 @@ namespace Asset
         Blue,
         Yellow
     }
-
     [Serializable]
     public class DictData
     {
@@ -35,7 +34,7 @@ namespace Asset
             this.data = data;
         }
     }
-
+    //X:力量，Y:敏捷 ，Z:消耗
     [CreateAssetMenu(fileName = "NewCard", menuName = "MyAsset/CardAsset", order = 0)]
     public class CardAsset : ScriptableObject
     {
@@ -43,9 +42,9 @@ namespace Asset
         [BoxGroup("材质")] public CardQuality cardQuality;
         [BoxGroup("材质")] [ShowAssetPreview()] public Sprite cardSprite;
 
-        [BoxGroup("数据")]
-        [Tooltip("消耗")]
-        public int Expend;
+        [BoxGroup("数据")][Tooltip("消耗")]public int Expend;
+        [BoxGroup("数据")][Tooltip("消耗")]public List<int> BuffValue;
+        [BoxGroup("数据")][Tooltip("消耗")]public int BuffRound;
 
         [BoxGroup("数据")] public string cardName;
 
@@ -76,10 +75,13 @@ namespace Asset
                     if (!t.key.Equals(i)) continue;
 
                     var addValue = 0;    //加成值
-                    //判断该数据是否需要被加成
-                    if (t.key >= 'A' && t.key <= 'Z')
+                     //判断该数据是否需要被加成
+                    if (dictAddData.Count!=0)
                     {
-                        addValue = dictAddData.FirstOrDefault(m => m.key == t.key).data;
+                        if (t.key >= 'A' && t.key <= 'Z')
+                        {
+                            addValue = dictAddData.FirstOrDefault(m => m.key == t.key).data;
+                        }
                     }
                     currChar = t.data + addValue + "";
                     break;
@@ -87,25 +89,22 @@ namespace Asset
 
                 desc += currChar;
             }
+            if (dictAddData.Count != 0)
+                Expend += dictAddData.FirstOrDefault(m => m.key == 'Z').data;
             _cardAttrChangeCb?.Invoke();
         }
         /// <summary>
         /// 更新卡牌
         /// </summary>
-        [Button("写入玩家加成数据")]
-        public void UpdateCard()
+        public void UpdateCard(PlayerAsset player)
         {
             dictAddData.Clear();
-            dictAddData.Add(new DictData('X', PlayerAsset.Instance.strength));
-            dictAddData.Add(new DictData('Y', PlayerAsset.Instance.agility));
+            dictAddData.Add(new DictData('X', player.strength));
+            dictAddData.Add(new DictData('Y', player.agility));
+            dictAddData.Add(new DictData('Z', player.costAddition));
             //X-玩家力量 Y-玩家敏捷
-            //Debug.Log(PlayerAsset.Instance.maxHp + "\t" + PlayerAsset.Instance.currentHp + "\t" + PlayerAsset.Instance.strength);
             //重写
             InitCardAsset();
-        }
-        public void SetChangeEvent(System.Action cb)
-        {
-            _cardAttrChangeCb = cb;
         }
         [Button("写入卡牌效果")]
         public void SetEffect()
@@ -117,11 +116,15 @@ namespace Asset
                 {
                     effect.hideFlags = HideFlags.HideInHierarchy;
                     effect.Card = this;
+                    effect.InCardIdx = i;
                     Effects.Add(effect);
                     AssetDatabase.AddObjectToAsset(effect, this);
                 }
             }
-
+        }
+        public void SetChangeEvent(System.Action cb)
+        {
+            _cardAttrChangeCb = cb;
         }
     }
 }

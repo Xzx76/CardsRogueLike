@@ -13,5 +13,6 @@ public class Constants
 
         public const string Msg_UseCard = "Msg_UseCard";
         public const string Msg_PlayerHealthChange = "Msg_PlayerHealthChange";
+        public const string Msg_PlayerAttributeChange = "Msg_PlayerAttributeChange";
     }
 }

@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b281784764c9c9429b690b16401e4a2, type: 3}
   m_Name: TestPlayer
   m_EditorClassIdentifier: 
+  baseHp: 50
+  baseStrength: 0
+  baseAgility: 0
   maxHp: 50
-  currentHp: 0
+  currentHp: 50
   strength: 0
   agility: 0

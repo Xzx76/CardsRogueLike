@@ -16,12 +16,12 @@ namespace TocClient
         private Dictionary<string, string> _language;
         private Dictionary<string, MapInfo> _mapInfo;
         private Dictionary<int, Sprite> cardQuilitySprites;
-        public CardAsset TestCard;
-        public CardAsset TestCard1;
+        public CardAsset[] Cards;
         public override void Init()
         {
             _language = new Dictionary<string, string>();
             cardQuilitySprites = new();
+            Cards = new CardAsset[3];
             LoadCardAsset();
             LoadCardQuilitySprite();
             //初始化状态
@@ -65,11 +65,15 @@ namespace TocClient
         {
             AssetManager.Instance.LoadAssetAsync<CardAsset>("Hit",asset=>
             {
-                TestCard = asset;
+                Cards[0] = asset;
             });            
             AssetManager.Instance.LoadAssetAsync<CardAsset>("AexHit", asset=>
             {
-                TestCard1 = asset;
+                Cards[1] = asset;
+            });
+            AssetManager.Instance.LoadAssetAsync<CardAsset>("Stronger", asset =>
+            {
+                Cards[2] = asset;
             });
             AssetManager.Instance.CreatePoolAsync("CardPrefab");
         }

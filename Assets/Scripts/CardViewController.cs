@@ -47,11 +47,19 @@ public class CardViewController : MonoBehaviour, IPointerEnterHandler, IPointerE
             cardName.text = value.cardName;
             cardDesc.text = value.desc;
             cardInfo = value;
+            cardInfo.SetChangeEvent(()=>
+            {
+                RefreshCard();
+            });
         }
         get
         {
             return cardInfo;
         }
+    }
+    public void RefreshCard()
+    {
+        cardDesc.text = cardInfo.desc;
     }
     public void Init()
     {

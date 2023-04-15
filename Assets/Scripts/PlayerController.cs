@@ -8,16 +8,24 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private PlayerAsset asset;
+    public PlayerAsset Asset;
 
     private void Awake()
     {
         
     }
+    public void InitPlayerAsset()
+    {
+        Asset.Init();
+        Asset.SetChangeEvent(()=>
+        {
+            MsgSystem.Instance.Dispatch(Constants.Msg_PlayerAttributeChange);
+        });
+    }
     public void OnAttack(int damage)
     {
-        asset.currentHp -= damage;
-        MsgSystem.Instance.Dispatch<int,int>(Constants.Msg_PlayerHealthChange, asset.currentHp,asset.maxHp);
+        Asset.currentHp -= damage;
+        MsgSystem.Instance.Dispatch<int,int>(Constants.Msg_PlayerHealthChange, Asset.currentHp, Asset.maxHp);
     }
     public void OnShiled(int ShiledNum)
     {

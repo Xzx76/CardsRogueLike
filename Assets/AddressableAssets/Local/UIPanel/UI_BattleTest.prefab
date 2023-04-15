@@ -996,12 +996,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06e150cdf2607d34bb3d4e8edf11876f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 3841169222994535739}
   width: 120
   angl: 8
   cardGroup: {fileID: 3841169224390027995}
   usedCardGroup: {fileID: 3841169223011028307}
-  roundHeadCardNum: 4
+  root: {fileID: 3841169222994535739}
+  RoundHeadCardNum: 4
   CardGroup: []
   CardInGroup: []
   CardsUsed: []
