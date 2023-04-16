@@ -147,17 +147,17 @@ public class FightManager : MonoBehaviour
     /// </summary>
     public void UpDateHeadCard()
     {
-        foreach (var item in CardInGroup)
+        foreach (var item in CardsInHead)
         {
             item.UpdateCard(player.Asset);
         }
     }
     public void UpDateHeadCard(int idx)
     {
-        if (CardInGroup.Count < idx)
+        if (CardsInHead.Count < idx)
             return;
         else
-            CardInGroup[idx].UpdateCard(player.Asset);
+            CardsInHead[idx].UpdateCard(player.Asset);
     }
     /// <summary>
     /// 使用卡牌

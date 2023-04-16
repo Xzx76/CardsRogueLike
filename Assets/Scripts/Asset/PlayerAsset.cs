@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace Asset
 {
-    public enum Attributes
-    {
-        Strength,
-        Agility,
-        CostAddition
-    }
     [CreateAssetMenu(fileName = "NEW PlayerAsset", menuName = "MyAsset/PlayerAsset", order = 0)]
     public class PlayerAsset : ScriptableObject
     {
@@ -28,6 +22,7 @@ namespace Asset
         public void Init()
         {
             maxHp = baseHp;
+            currentHp = baseHp;
             strength = baseStrength;
             agility = baseAgility;
             costAddition = baseCostAddition;

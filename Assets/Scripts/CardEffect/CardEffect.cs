@@ -8,6 +8,7 @@ namespace Asset
     public class CardEffect : ScriptableObject
     {
         public CardAsset Card;
+        public CardInfo CardInfo;
         public int InCardIdx;
         public virtual void Resolve(PlayerController player = null, List<EnemyController> enemys = null, EnemyController enemy = null)
         {

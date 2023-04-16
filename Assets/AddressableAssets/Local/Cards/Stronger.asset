@@ -16,12 +16,36 @@ MonoBehaviour:
   cardQuality: 0
   cardSprite: {fileID: 21300000, guid: d2a228b07d4ab43748568f40c872cff4, type: 3}
   Expend: 2
+  BuffValue: 02000000
+  BuffRound: 0
   cardName: "\u5065\u8EAB"
   express: "\u589E\u52A02\u70B9\u529B\u91CF"
   desc: "\u589E\u52A02\u70B9\u529B\u91CF"
   dictData: []
-  dictAddData: []
+  dictAddData:
+  - key: 88
+    data: 2
+  - key: 89
+    data: 0
+  - key: 90
+    data: 0
   Upgrade: {fileID: 0}
-  Effects: []
-  EffectNames: []
+  Effects:
+  - {fileID: 6068168979702375177}
+  EffectNames:
+  - Asset.StrengthBuff
   Target: Player
+--- !u!114 &6068168979702375177
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b80338c954d2f4e45999381bf595e450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Card: {fileID: 11400000}
+  InCardIdx: 0

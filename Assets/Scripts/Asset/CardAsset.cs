@@ -11,17 +11,7 @@ namespace Asset
     /// <summary>
     /// 卡牌类型
     /// </summary>
-    public enum CardType
-    {
-        Attack,
-        Skill,
-    }
-    public enum CardQuality
-    {
-        Write,
-        Blue,
-        Yellow
-    }
+
     [Serializable]
     public class DictData
     {
