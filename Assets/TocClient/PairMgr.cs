@@ -16,13 +16,16 @@ namespace TocClient
         private Dictionary<string, string> _language;
         private Dictionary<string, MapInfo> _mapInfo;
         private Dictionary<int, Sprite> cardQuilitySprites;
+        private Dictionary<int, CardInfo> cardsInfo;
         public CardAsset[] Cards;
         public override void Init()
         {
             _language = new Dictionary<string, string>();
             cardQuilitySprites = new();
+            cardsInfo = new();
             Cards = new CardAsset[3];
             LoadCardAsset();
+            LoadCardsInfo();
             LoadCardQuilitySprite();
             //初始化状态
             _hasInit = true;
@@ -119,25 +122,40 @@ namespace TocClient
         //        action?.Invoke();
         //    });
         //}
-/*        private void LoadHeroVocation()
+        private void LoadCardsInfo()
         {
-            LoadCheck check = new LoadCheck("地图信息");
+            LoadCheck check = new LoadCheck("卡牌信息");
             GameLaunch.AddloadCheck(check);
 
-            AssetManager.Instance.LoadAssetAsync<TextAsset>(Constants.Cfg_MapInfo, asset =>
+            AssetManager.Instance.LoadAssetAsync<TextAsset>(Constants.Cfg_CardInfo, asset =>
             {
-                List<MapInfo> result = JsonMapper.ToObject<List<MapInfo>>(asset.text);
+                List<Cfg_Cs_CardInfo> result = JsonMapper.ToObject<List<Cfg_Cs_CardInfo>>(asset.text);
                 int count = result.Count;
-                if (_mapInfo == null)
-                    _mapInfo = new Dictionary<string, MapInfo>();
                 for (int i = 0; i < count; i++)
                 {
-                    MapInfo item = result[i];
-                    _mapInfo[item.MapName] = item;
+                    CardInfo item = new()
+                    {
+                        CardId = result[i].CardId,
+                        CardType = (CardType)result[i].CardType,
+                        CardQuality = (CardQuality)result[i].CardQuility,
+                        CardSprite = result[i].CardSprite,
+                        BaseExpend = result[i].BaseExpend,
+                        BuffValue = result[i].BuffValue,
+                        BuffRound = result[i].BuffRound,
+                        CardName = result[i].CardName,
+                        Target = result[i].Target,
+                        UpgradeCardId = result[i].UpgradeCardId,
+                        AdditionTypes = result[i].AdditionTypes,
+                        BaseAddition = result[i].BaseAddition,
+                        CurrencyExpend = result[i].BaseExpend,
+                        CurrencyAddition = result[i].BaseAddition,
+                        EffectNames = result[i].EffectNames
+                    };
+                    cardsInfo.Add(item.CardId, item);
                 }
                 //加载完成反馈
                 check.SetReady();
             });
-        }*/
+        }
     }
 }

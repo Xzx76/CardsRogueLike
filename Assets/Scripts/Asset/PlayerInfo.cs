@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum Attributes
 {
-    Strength,
+    Strength=1,
     Agility,
     CostAddition
 }
